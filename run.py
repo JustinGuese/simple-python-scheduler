@@ -17,6 +17,7 @@ BASE_FOLDER = environ[
 PYTHON_PATH = environ[
     "PYTHON_PATH"
 ]  # the path to the python executable where requirements of your scripts are installed. unsure? type which python3 in your terminal
+SLACK_ON_ERROR = environ.get("SLACK_ON_ERROR", "False") == "True"
 
 PRINTLOGS = False
 # tmp/bigtechmom.py
@@ -40,7 +41,19 @@ allExecutions = sorted(allExecutions, key=lambda x: x[0])
 print(f"found {len(allExecutions)} executions today, proceed to process.")
 
 
-def run_script(folder, file):
+def send_slack_message(bot_name, errors):
+    from slack_sdk.webhook import WebhookClient
+
+    webhook = WebhookClient(environ["SLACK_WEBHOOK_URL"])
+    response = webhook.send(text=f"Error {bot_name}: {errors}")
+    assert response.status_code == 200
+    assert response.body == "ok"
+
+
+def run_script(schedule: Schedule):
+    folder = schedule.folder
+    file = schedule.file
+    bot_name = schedule.bot_name
     # Run the script
     result = subprocess.run(
         [PYTHON_PATH, file],
@@ -61,10 +74,15 @@ def run_script(folder, file):
         else:
             print("!!failure")
             print(errors)
+            if SLACK_ON_ERROR:
+                try:
+                    send_slack_message(bot_name, errors)
+                except Exception as e:
+                    print(f"error sending slack message: {e}")
 
     # Check the return code to see if the script ran successfully
     rr = RunResult(
-        bot_name=schedule.bot_name,
+        bot_name=bot_name,
         success=success,
         error=str(errors) if not success else None,
         logs=str(logs),
@@ -88,7 +106,7 @@ for timestamp, schedule in allExecutions:
         time.sleep(waitFor.total_seconds())
     print(f"running {schedule.bot_name} now")
 
-    success = run_script(schedule.folder, schedule.file)
+    success = run_script(schedule)
     if success:
         print("success for {schedule.bot_name}")
     else:

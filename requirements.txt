@@ -2,3 +2,4 @@ SqlAlchemy
 psycopg2-binary
 croniter
 python-dotenv
+slack_sdk # optional
