@@ -18,6 +18,7 @@ PYTHON_PATH = environ[
     "PYTHON_PATH"
 ]  # the path to the python executable where requirements of your scripts are installed. unsure? type which python3 in your terminal
 SLACK_ON_ERROR = environ.get("SLACK_ON_ERROR", "False") == "True"
+print(f"logging to slack is {SLACK_ON_ERROR}")
 
 PRINTLOGS = False
 # tmp/bigtechmom.py
