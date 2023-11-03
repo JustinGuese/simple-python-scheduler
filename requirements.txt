@@ -1,3 +1,4 @@
 SqlAlchemy
 psycopg2-binary
 croniter
+python-dotenv
