@@ -7,7 +7,7 @@ WorkingDirectory=/root/simple-python-scheduler/
 Type=simple
 Restart=always
 RestartSec=1
-User=centos
+User=root
 ExecStart=/root/miniconda3/bin/python3 run.py
 
 [Install]
