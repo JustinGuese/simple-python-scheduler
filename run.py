@@ -75,6 +75,7 @@ def run_script(schedule: Schedule):
             print("!!failure")
             print(errors)
             if SLACK_ON_ERROR:
+                print("trying ot send error to slack")
                 try:
                     send_slack_message(bot_name, errors)
                 except Exception as e:
