@@ -3,12 +3,12 @@ Description=Python script scheduler
 After=network.target
 StartLimitIntervalSec=0
 [Service]
-WorkingDirectory=/root/pyscheduler/
+WorkingDirectory=/root/simple-python-scheduler/
 Type=simple
 Restart=always
 RestartSec=1
 User=centos
-ExecStart=python run.py
+ExecStart=/root/miniconda3/bin/python3 run.py
 
 [Install]
 WantedBy=multi-user.target
