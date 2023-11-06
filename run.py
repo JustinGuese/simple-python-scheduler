@@ -95,6 +95,15 @@ def run_script(schedule: Schedule):
     return success
 
 
+# if we have no exeuctions today anymore wait until tomorrow
+if len(allExecutions) == 0:
+    left = datetime.utcnow().date() + timedelta(days=1)
+    left = left - datetime.utcnow()
+    print(
+        f"no executions today, waiting for {round(left/60/60,2)} hours until tomorrow"
+    )
+    time.sleep(left.total_seconds())
+
 for timestamp, schedule in allExecutions:
     waitFor = timestamp - datetime.utcnow()
     if waitFor.total_seconds() < 0:
