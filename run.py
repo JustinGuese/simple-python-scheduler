@@ -98,9 +98,11 @@ def run_script(schedule: Schedule):
 # if we have no exeuctions today anymore wait until tomorrow
 if len(allExecutions) == 0:
     left = datetime.utcnow().date() + timedelta(days=1)
+    # convert left to datetime
+    left = datetime.combine(left, datetime.min.time())
     left = left - datetime.utcnow()
     print(
-        f"no executions today, waiting for {round(left/60/60,2)} hours until tomorrow"
+        f"no executions today, waiting for {round(left.total_seconds()/60/60,2)} hours until tomorrow"
     )
     time.sleep(left.total_seconds())
 
