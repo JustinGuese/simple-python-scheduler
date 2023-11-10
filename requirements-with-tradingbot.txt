@@ -6,11 +6,10 @@ slack_sdk # optional
 # tradingbot requirements
 basebot22-basebot-JustinGuese
 pandas
-PyPortfolioOpt
+# PyPortfolioOpt
 yfinance
 scikit-learn
 numpy
-prefect
 ta
 # https://github.com/mariostoev/finviz
 finnhub-python
