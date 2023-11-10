@@ -1,0 +1,17 @@
+SqlAlchemy
+psycopg2-binary
+croniter
+python-dotenv
+slack_sdk # optional
+# tradingbot requirements
+basebot22-basebot-JustinGuese
+pandas
+PyPortfolioOpt
+yfinance
+scikit-learn
+numpy
+prefect
+ta
+# https://github.com/mariostoev/finviz
+finnhub-python
+requests
