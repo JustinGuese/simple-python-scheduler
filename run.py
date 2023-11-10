@@ -18,6 +18,7 @@ PYTHON_PATH = environ[
     "PYTHON_PATH"
 ]  # the path to the python executable where requirements of your scripts are installed. unsure? type which python3 in your terminal
 SLACK_ON_ERROR = environ.get("SLACK_ON_ERROR", "False") == "True"
+RUN_ALL_NOW = environ.get("RUN_ALL_NOW", "False") == "True"  # only used for debugging
 print(f"logging to slack is {SLACK_ON_ERROR}")
 
 PRINTLOGS = False
@@ -108,6 +109,9 @@ if len(allExecutions) == 0:
 
 for timestamp, schedule in allExecutions:
     waitFor = timestamp - datetime.utcnow()
+    if RUN_ALL_NOW:
+        waitFor = 0
+        print("RUN_ALL_NOW env is set, therefore not waiting, but running all now")
     if waitFor.total_seconds() < 0:
         print(
             f"{schedule.bot_name} is overdue with {round(waitFor.total_seconds()/60,2)} minutes"
