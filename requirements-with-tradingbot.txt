@@ -6,7 +6,6 @@ slack_sdk # optional
 # tradingbot requirements
 basebot22-basebot-JustinGuese
 pandas
-# PyPortfolioOpt
 yfinance
 scikit-learn
 numpy
