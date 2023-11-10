@@ -110,7 +110,7 @@ if len(allExecutions) == 0:
 for timestamp, schedule in allExecutions:
     waitFor = timestamp - datetime.utcnow()
     if RUN_ALL_NOW:
-        waitFor = 0
+        waitFor = datetime.utcnow() - datetime.utcnow()  # hacklevel 3000
         print("RUN_ALL_NOW env is set, therefore not waiting, but running all now")
     if waitFor.total_seconds() < 0:
         print(
